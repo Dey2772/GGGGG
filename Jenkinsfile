@@ -20,8 +20,11 @@ pipeline {
         */
         stage('Desplegar') {
             steps {
-                // Detener contenedores existentes para evitar conflictos de nombres
-                sh 'docker-compose down --remove-orphans'
+                // Eliminar contenedores conflictivos por nombre
+                sh '''
+                docker rm -f ci_jenkins || true
+                docker rm -f app_web || true
+                '''
                 sh 'docker-compose up -d'
             }
         }
