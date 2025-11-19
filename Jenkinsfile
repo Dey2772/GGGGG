@@ -11,15 +11,17 @@ pipeline {
                 sh 'docker-compose build'
             }
         }
-/*
+        /*
         stage('Ejecutar pruebas') {
             steps {
                 sh 'docker-compose run --rm web python -m unittest discover tests'
             }
         }
-*/
+        */
         stage('Desplegar') {
             steps {
+                // Detener contenedores existentes para evitar conflictos de nombres
+                sh 'docker-compose down --remove-orphans'
                 sh 'docker-compose up -d'
             }
         }
